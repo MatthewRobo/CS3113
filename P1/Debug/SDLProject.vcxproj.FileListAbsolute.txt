@@ -1,0 +1,6 @@
+C:\Users\matth\Desktop\CS3113-master\Templates\VisualStudioSDLProject\SDLProject\Debug\SDLProject.exe
+C:\Users\matth\Desktop\CS3113-master\Templates\VisualStudioSDLProject\SDLProject\Debug\SDLProject.pdb
+C:\Users\matth\Desktop\CS3113-master\Templates\VisualStudioSDLProject\P1\Debug\SDLProject.exe
+C:\Users\matth\Desktop\CS3113-master\Templates\VisualStudioSDLProject\P1\Debug\SDLProject.pdb
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P1\Debug\SDLProject.exe
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P1\Debug\SDLProject.pdb
