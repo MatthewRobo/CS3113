@@ -21,13 +21,17 @@ SDL_Window* displayWindow;
 bool gameIsRunning = true;
 
 ShaderProgram program;
-glm::mat4 viewMatrix, modelMatrix, p1Matrix, p2Matrix, netMatrix, itemMatrix, projectionMatrix;
+glm::mat4 viewMatrix, modelMatrix, p1Matrix, p2Matrix, netMatrix, itemMatrix, pointMatrix, projectionMatrix;
 glm::vec3 p1_position, p1_movement = glm::vec3(0, 0, 0);
 glm::vec3 p2_position, p2_movement = glm::vec3(0, 0, 0);
 glm::vec3 item_position, item_movement = glm::vec3(0, 0, 0);
+glm::vec3 point_movement, point_gravity = glm::vec3(0, 0, 0);
+glm::vec3 point_position = glm::vec3(-100, 0, 0);
+bool p1Point = false;
 float player_speed = 3.25;
 float ball_speed = 4.0;
 GLuint whiteTextureID;
+GLuint pointTextureID;
 
 GLuint LoadTexture(const char* filePath)
 {
@@ -90,6 +94,7 @@ void Initialize()
 	item_movement = glm::vec3(1, 2, 0);
 
 	whiteTextureID = LoadTexture("white.png");
+	pointTextureID = LoadTexture("victory.png");
 }
 
 void ProcessInput()
@@ -119,19 +124,21 @@ void ProcessInput()
 		case SDL_WINDOWEVENT_CLOSE:
 			gameIsRunning = false;
 			break;
-			// case SDL_KEYDOWN:
-			//  switch (event.key.keysym.sym) {
-			//  case SDLK_RIGHT:
-			//      p1_movement.x = 1.0f;
-			//      break;
-			//  case SDLK_LEFT:
-			//      p1_movement.x = -1.0f;
-			//      break;
-			//  case SDLK_SPACE:
-			//      //  PlayerJump();
-			//      break;
-			//  }
-			//  break;
+		case SDL_KEYDOWN:
+			switch (event.key.keysym.sym) {
+			default:
+				if (ball_speed <= 1.0f) ball_speed = 4.0f;
+				//  case SDLK_RIGHT:
+				//      p1_movement.x = 1.0f;
+				//      break;
+				//  case SDLK_LEFT:
+				//      p1_movement.x = -1.0f;
+				//      break;
+				//  case SDLK_SPACE:
+				//      //  PlayerJump();
+				//      break;
+			}
+			break;
 		}
 	}
 }
@@ -144,6 +151,10 @@ void Update()
 	float deltaTime = ticks - lastTicks;
 	lastTicks = ticks;
 
+	p1Matrix = glm::mat4(1.0f);
+	p2Matrix = glm::mat4(1.0f);
+	itemMatrix = glm::mat4(1.0f);
+	pointMatrix = glm::mat4(1.0f);
 
 	item_movement = glm::normalize(item_movement);
 	// Add (direction * units per second * elapsed time)
@@ -152,6 +163,8 @@ void Update()
 	p2_position += p2_movement * player_speed * deltaTime;
 	p2_position.x = PADDLE_DISTANCE.x;
 	item_position += item_movement * ball_speed * deltaTime;
+	point_movement += point_gravity * deltaTime;
+	point_position += point_movement * deltaTime;
 
 	if (p1_position.y >  3.75f - (PADDLE_SIZE.y / 2.0f)) p1_position.y =  3.75f - (PADDLE_SIZE.y / 2.0f);
 	if (p1_position.y < -3.75f + (PADDLE_SIZE.y / 2.0f)) p1_position.y = -3.75f + (PADDLE_SIZE.y / 2.0f);
@@ -181,15 +194,24 @@ void Update()
 	}
 
 	if (item_position.x < -6.0f || item_position.x > 6.0f) {
-		item_position.x = 0;
-		ball_speed = 4.0;
+		if (item_position.x > 0) {
+			point_gravity.x  = -3 * ball_speed;
+			point_movement.x =  2 * ball_speed;
+			point_position.x = -6.0f;
+			p1Point = true;
+			item_position.x  = -0.125f;
+		} else {
+			point_gravity.x  =  3 * ball_speed;
+			point_movement.x = -2 * ball_speed;
+			point_position.x = 6.0f;
+			p1Point = false;
+			item_position.x  =  0.125f;
+		}
+		ball_speed = 0.0;
+
 	}
 
 	player_speed = ball_speed * 3.25f / 4.0f;
-
-	p1Matrix = glm::mat4(1.0f);
-	p2Matrix = glm::mat4(1.0f);
-	itemMatrix = glm::mat4(1.0f);
 
 	p1Matrix = glm::translate(p1Matrix, p1_position);
 	p1Matrix = glm::scale(p1Matrix, PADDLE_SIZE);
@@ -201,11 +223,11 @@ void Update()
 	itemMatrix = glm::scale(itemMatrix, BALL_SIZE);
 
 	netMatrix = glm::scale(glm::mat4(1.0f), glm::vec3(0.025f, 12.0f, 1.0f));
+	pointMatrix = glm::translate(pointMatrix, point_position);
+	if (p1Point) pointMatrix = glm::rotate(pointMatrix, -1.57079632679f, glm::vec3(0.0f, 0.0f, 1.0f));
+	else pointMatrix = glm::rotate(pointMatrix, 1.57079632679f, glm::vec3(0.0f, 0.0f, 1.0f));
+	pointMatrix = glm::scale(pointMatrix, 1.5f * glm::vec3(608.0f / 160.0f, 1.0f, 1.0f));
 	// p1Matrix = glm::rotate(p1Matrix, -p1_position.x, glm::vec3(0.0f, 0.0f, 1.0f));
-
-
-
-
 }
 
 void Render()
@@ -235,6 +257,10 @@ void Render()
 
 	program.SetModelMatrix(netMatrix);
 	glBindTexture(GL_TEXTURE_2D, whiteTextureID);
+	glDrawArrays(GL_TRIANGLES, 0, 6);
+
+	program.SetModelMatrix(pointMatrix);
+	glBindTexture(GL_TEXTURE_2D, pointTextureID);
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
 	glDisableVertexAttribArray(program.positionAttribute);
