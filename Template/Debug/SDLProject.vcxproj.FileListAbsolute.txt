@@ -1,0 +1,2 @@
+C:\msys64\home\M-AS\MatthewRobo\CS3113\Template\Debug\SDLProject.exe
+C:\msys64\home\M-AS\MatthewRobo\CS3113\Template\Debug\SDLProject.pdb

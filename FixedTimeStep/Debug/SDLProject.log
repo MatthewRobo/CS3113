@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\msys64\home\M-AS\MatthewRobo\CS3113\FixedTimeStep\main.cpp(67,23): warning C4018: '<': signed/unsigned mismatch
+  SDLProject.vcxproj -> C:\msys64\home\M-AS\MatthewRobo\CS3113\FixedTimeStep\Debug\SDLProject.exe
