@@ -1,0 +1,3 @@
+﻿  main.cpp
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P4\main.cpp(72,20): warning C4018: '<': signed/unsigned mismatch
+  SDLProject.vcxproj -> C:\msys64\home\M-AS\MatthewRobo\CS3113\P4\Debug\SDLProject.exe

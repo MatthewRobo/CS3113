@@ -1,3 +1,5 @@
 ﻿  main.cpp
 C:\msys64\home\M-AS\MatthewRobo\CS3113\P2\main.cpp(140,4): warning C4065: switch statement contains 'default' but no 'case' labels
+  ShaderProgram.cpp
+  Generating Code...
   SDLProject.vcxproj -> C:\msys64\home\M-AS\MatthewRobo\CS3113\P2\Debug\SDLProject.exe
