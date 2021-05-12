@@ -1,0 +1,14 @@
+﻿  Level1.cpp
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P6\Level1.cpp(431,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P6\Level1.cpp(432,12): warning C4244: 'initializing': conversion from 'T' to 'int', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P6\Level1.cpp(443,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\msys64\home\M-AS\MatthewRobo\CS3113\P6\Level1.cpp(444,13): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  SDLProject.vcxproj -> C:\msys64\home\M-AS\MatthewRobo\CS3113\P6\Debug\SDLProject.exe
