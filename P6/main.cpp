@@ -44,7 +44,7 @@ Mix_Music* music;
 void Initialize()
 {
 	SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO);
-	displayWindow = SDL_CreateWindow("FALL BUNNEH", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1280, 720,
+	displayWindow = SDL_CreateWindow("FALL BUNNEH", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 1920, 1080,
 		SDL_WINDOW_OPENGL);
 	SDL_GLContext context = SDL_GL_CreateContext(displayWindow);
 	SDL_GL_MakeCurrent(displayWindow, context);
@@ -53,7 +53,7 @@ void Initialize()
 	glewInit();
 #endif
 
-	glViewport(0, 0, 1280, 720);
+	glViewport(0, 0, 1920, 1080);
 
 	program.Load("shaders/vertex_textured.glsl", "shaders/fragment_textured.glsl");
 
